@@ -1,0 +1,75 @@
+def next_greater_element_to_right(arr):
+    n = len(arr)
+    stack = []
+    res = [-1] * n
+    for i in range(n - 1, -1, -1):
+        while stack and stack[-1] <= arr[i]:
+            stack.pop()
+        if stack:
+            res[i] = stack[-1]
+        stack.append(arr[i])
+    return res
+
+def next_smaller_element_to_right(arr):
+    stack = []
+    result = []
+    for i in range(len(arr)-1, -1, -1):
+        while stack and stack[-1] >= arr[i]:
+            stack.pop()
+        if not stack:
+            result.append(-1)
+        else:
+            result.append(stack[-1])
+        stack.append(arr[i])
+    result.reverse()
+    return result
+
+def next_greater_to_left(arr):
+    n = len(arr)
+    result = [-1] * n
+    stack = []
+    
+    for i in range(n):
+        while stack and stack[-1] < arr[i]:
+            stack.pop()
+        
+        if stack:
+            result[i] = stack[-1]
+        
+        stack.append(arr[i])
+    
+    return result
+
+def next_smaller_element_to_left(arr):
+    n = len(arr)
+    result = [-1] * n
+    stack = []
+    
+    for i in range(n):
+        while stack and stack[-1] >= arr[i]:
+            stack.pop()
+        
+        if stack:
+            result[i] = stack[-1]
+        
+        stack.append(arr[i])
+    
+    return result
+
+def is_valid_parentheses(s):
+    stack = []
+    opening_brackets = set(['(', '[', '{'])
+    closing_brackets = set([')', ']', '}'])
+    bracket_pairs = {')': '(', ']': '[', '}': '{'}
+    
+    for c in s:
+        if c in opening_brackets:
+            stack.append(c)
+        elif c in closing_brackets:
+            if not stack:
+                return False
+            elif bracket_pairs[c] != stack.pop():
+                return False
+    
+    return len(stack) == 0
+
